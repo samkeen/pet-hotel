@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Pets{% endblock %}</h1>
+  {% if g.user %}
+    <a href="{{ url_for('pet.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for pet in pets %}
+    <article>
+      <header>
+        <div>
+          <h1>{{ pet['name'] }}</h1>
+        </div>
+      </header>
+      <p>{{ pet }} <a href="{{ url_for('pet.update', id=pet['id']) }}">Edit</a></p>
+
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

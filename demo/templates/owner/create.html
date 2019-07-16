@@ -1,0 +1,19 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Update Owner{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <h3>Owner</h3>
+    <dl>
+        {{ render_field(form.first_name) }}
+        {{ render_field(form.last_name) }}
+        {{ render_field(form.phone_number) }}
+        {{ render_field(form.email) }}
+    </dl>
+    <p><input type=submit value=Save></p>
+</form>
+{% endblock %}

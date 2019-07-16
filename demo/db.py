@@ -37,15 +37,31 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+
 def get_uuid():
     return str(uuid.uuid1())
 
+
+def build_insert(table_name, attributes):
+    attributes.pop('id', None)  # don't allow id to be set
+    field_names = attributes.keys()
+    field_values = attributes.values()
+    fields = f'INSERT INTO `{table_name}` (`id`, `{"`, `".join(field_names)}`)'
+    values = f'VALUES ( %s, {", ".join(["%s"] * len(field_values))})'
+    return f'{fields} {values}'
+
+
+def build_update(table_name, attributes):
+    attributes.pop('id', None)  # don't allow id in attributes
+    set_statements = [f'`{k}`= %s' for k in attributes.keys()]
+    return f'UPDATE `{table_name}` SET {", ".join(set_statements)} WHERE id = %s'
+
+
+def build_delete(table_name):
+    return f'DELETE FROM `{table_name}` WHERE id = %s'
+
+
 def init_db():
     db = get_db()
-    # cur = db.cursor().execute("SHOW DATABASES")
-    #
-    # for x in cur:
-    #     print(x)
-
     with current_app.open_resource('schema.sql') as f:
         db.cursor().execute(f.read().decode('utf8'))

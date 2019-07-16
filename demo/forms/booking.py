@@ -1,9 +1,8 @@
-from flask_wtf import FlaskForm
-from wtforms import SubmitField, DateField, SelectField
+from wtforms import SubmitField, DateField, SelectField, Form
 from wtforms.validators import InputRequired
 
 
-class BookingForm(FlaskForm):
+class BookingForm(Form):
     owner_id = SelectField('Owner')
     pet_id = SelectField('Pet')
     booking_check_in_date = DateField('Check In', format='%Y-%m-%d', validators=[InputRequired()])

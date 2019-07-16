@@ -6,27 +6,17 @@
 
 {% block content %}
   <form method="post">
-    <h3>Owner</h3>
-    <label for="first_name">First Name</label>
-    <input name="first_name" id="first_name" value="{{ request.form['first_name'] }}" >
-    <label for="last_name">Last Name</label>
-    <input name="last_name" id="last_name" value="{{ request.form['last_name'] }}" >
-    <label for="phone_number">Phone Number</label>
-    <input name="phone_number" id="phone_number" value="{{ request.form['phone_number'] }}" >
-    <label for="email">Email</label>
-    <input name="email" id="email" value="{{ request.form['email'] }}" >
     <h3>Pet</h3>
     <label for="name">Name</label>
     <input name="name" id="name" value="{{ request.form['name'] }}" required>
     <label for="dob">Date of birth</label>
     <input name="dob" id="dob" value="{{ request.form['dob'] }}" >
-    <h3>Schedule</h3>
-    <label for="check_in_date">Check In Date</label>
-    <input name="check_in_date" id="check_in_date" value="{{ request.form['check_in_date'] }}" required>
-    <label for="check_out_date">Check Out Date</label>
-    <input name="check_out_date" id="check_out_date" value="{{ request.form['check_out_date'] }}" required>
-    <label for="notes">Notes</label>
-    <textarea name="notes" id="notes" cols="30" rows="10"></textarea>
-    <input type="submit" value="Save">
+    <p>
+      {{ form.owner_id.label }}<br>
+      {{ form.owner_id() }}
+      {% for error in form.owner_id.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
   </form>
 {% endblock %}

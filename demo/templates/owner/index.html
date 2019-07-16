@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Owners{% endblock %}</h1>
+  {% if g.user %}
+    <a href="{{ url_for('owner.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for owner in owners %}
+    <article>
+      <header>
+        <div>
+          <p>
+            {{ owner['last_name'] }}, {{ owner['first_name'] }}
+            <a href="{{ url_for('owner.update', owner_id=owner['id']) }}">Edit</a>
+            <form method="post" action="{{ url_for('owner.delete', owner_id=owner['id']) }}">
+          <input type="submit" onclick="return confirm('Are you sure?')" value="delete">
+        </form>
+          </p>
+        </div>
+      </header>
+
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

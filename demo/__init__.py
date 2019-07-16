@@ -38,9 +38,9 @@ def create_app(test_config=None):
     app.register_blueprint(pet.bp)
     app.add_url_rule('/pet', endpoint='index')
 
-    # schedule
-    from . import schedule
-    app.register_blueprint(schedule.bp)
-    app.add_url_rule('/', endpoint='index')
+    # owner
+    from . import owner
+    app.register_blueprint(owner.bp)
+    app.add_url_rule('/owner', endpoint='index')
 
     return app

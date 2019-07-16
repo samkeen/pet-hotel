@@ -19,10 +19,10 @@ bp = Blueprint('booking', __name__, url_prefix='/booking')
 def create():
     form = BookingForm()
     # form.owner_id.choices = [(g.id, g.name) for g in Group.query.order_by('name')]
-    form.owner_id.choices = [(1, 'Bob')]
-    form.pet_id.choices = [(1, 'Fluffy')]
+    form.owner_id.choices = [(pet['id'], f'{pet["last_name"]}, {pet["first_name"]}') for pet in get_owners()]
+    form.pet_id.choices = [(pet['id'], pet['name']) for pet in get_pets()]
     if form.validate_on_submit():
-        x=1
+        pass
         # if get_admin_by('username', username) is not None:
         #     flash(f'The username: "{username}" is not available"')
         # else:
@@ -72,9 +72,13 @@ def create():
 #     get_db().commit()
 #
 #
-# def get_admin_by(field_name, field_value):
-#     cur = get_db().cursor()
-#     cur.execute(
-#         f'SELECT * FROM admin WHERE {field_name} = %s', (field_value,)
-#     )
-#     return cur.fetchone()
+def get_pets():
+    cur = get_db().cursor()
+    cur.execute('SELECT id, name FROM pet order by name')
+    return cur.fetchall()
+
+
+def get_owners():
+    cur = get_db().cursor()
+    cur.execute('SELECT id, first_name, last_name FROM owner order by last_name')
+    return cur.fetchall()

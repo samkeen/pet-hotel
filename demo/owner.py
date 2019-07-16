@@ -38,7 +38,7 @@ def update(owner_id):
     return render_template('owner/update.html', form=form)
 
 
-@bp.route('/owner/<owner_id>/delete', methods=('POST', 'GET'))
+@bp.route('/owner/<owner_id>/delete', methods=('POST',))
 @login_required
 def delete(owner_id):
     owner = get_owner(owner_id)

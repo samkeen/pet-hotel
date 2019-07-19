@@ -2,7 +2,7 @@ import functools
 
 from flask import (
     Blueprint, flash, redirect, render_template, url_for,
-    session, g)
+    session, g, request)
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from demo.db import get_db, get_uuid
@@ -24,10 +24,10 @@ def login_required(view):
 @bp.route('/register', methods=('GET', 'POST'))
 @login_required
 def register():
-    form = AdminRegisterForm()
+    form = AdminRegisterForm(request.form)
     username = form.username.data
     password = form.password.data
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate():
         if get_admin_by('username', username) is not None:
             flash(f'The username: "{username}" is not available"')
         else:
@@ -38,8 +38,8 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
+    form = LoginForm(request.form)
+    if request.method == 'POST' and form.validate():
         admin = get_admin_by('username', form.username.data)
         error = None
         if admin is None or not check_password_hash(admin['password'], form.password.data):

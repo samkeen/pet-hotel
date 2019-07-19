@@ -1,32 +1,41 @@
-CREATE DATABASE IF NOT EXISTS demo;
-USE demo;
+create schema demo collate utf8mb4_0900_ai_ci;
 
-SET FOREIGN_KEY_CHECKS=0;
-DROP TABLE IF EXISTS admin;
-DROP TABLE IF EXISTS post;
-SET FOREIGN_KEY_CHECKS=1;
-
-create table user
+create table admin
 (
-    id       int          not null
-        primary key,
-    username varchar(200) not null,
-    password varchar(50)  not null,
-    constraint username
-        unique (username)
+	id varchar(36) not null
+		primary key,
+	username varchar(200) not null,
+	password varchar(96) not null,
+	constraint username
+		unique (username)
 );
 
-create table post
+create table booking
 (
-    id        int                                 not null
-        primary key,
-    author_id int                                 not null,
-    created   timestamp default CURRENT_TIMESTAMP not null,
-    title     text                                not null,
-    body      text                                not null,
-    constraint post_ibfk_1
-        foreign key (author_id) references admin (id)
+	id varchar(36) not null
+		primary key,
+	pet_id varchar(36) null,
+	check_in_date date null,
+	check_out_date date null
 );
 
-create index author_id
-    on post (author_id);
+create table owner
+(
+	id varchar(36) not null
+		primary key,
+	first_name varchar(100) null,
+	last_name varchar(100) null,
+	phone_number varchar(12) null,
+	email varchar(200) null,
+	constraint admin_email_uindex
+		unique (email)
+);
+
+create table pet
+(
+	id varchar(36) not null
+		primary key,
+	name varchar(200) null,
+	date_of_birth date null,
+	owner_id varchar(36) null
+);

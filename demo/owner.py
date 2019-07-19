@@ -1,22 +1,20 @@
 from flask import (
     Blueprint, redirect, render_template, request, url_for
 )
-from werkzeug.exceptions import abort
 
 from demo.admin import login_required
-from demo.db import get_db, build_update, build_delete
 from demo.forms.owner import OwnerForm
 from demo.models import get_all, insert_model, get_model_by_id, ObjectView, update_model, delete_model
 
-bp = Blueprint('owner', __name__)
+bp = Blueprint('owner', __name__, url_prefix='/owner')
 
 
-@bp.route('/owner')
+@bp.route('/')
 def index():
     return render_template('owner/index.html', owners=get_all('owner'))
 
 
-@bp.route('/owner/create', methods=('GET', 'POST'))
+@bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
     form = OwnerForm(request.form)
@@ -27,7 +25,7 @@ def create():
     return render_template('owner/create.html', form=form)
 
 
-@bp.route('/owner/<owner_id>/update', methods=('GET', 'POST'))
+@bp.route('/<owner_id>/update', methods=('GET', 'POST'))
 @login_required
 def update(owner_id):
     owner = get_model_by_id('owner', owner_id)
@@ -38,7 +36,7 @@ def update(owner_id):
     return render_template('owner/update.html', form=form)
 
 
-@bp.route('/owner/<owner_id>/delete', methods=('POST',))
+@bp.route('/<owner_id>/delete', methods=('POST',))
 @login_required
 def delete(owner_id):
     owner = get_model_by_id('owner', owner_id)

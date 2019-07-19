@@ -2,8 +2,17 @@
 
 ## Initialize App
 
-### Run schema
+**Create your virtual env then install pip packages**
+```bash
+python -m venv venv
+./venv/bin/activate
+pip install -r requirements.txt 
+```
 
-### Import data
+**Create Db**
+```bash
+```
+
+
 
 

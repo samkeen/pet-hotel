@@ -6,8 +6,9 @@ from flask import (
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from demo.db import get_db, get_uuid
-from demo.forms.admin_register import AdminRegisterForm
+from demo.forms.admin_register import AdminForm
 from demo.forms.login import LoginForm
+from demo.models import ObjectView, get_model_by_id, update_model, delete_model, get_all
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -21,10 +22,15 @@ def login_required(view):
     return wrapped_view
 
 
+@bp.route('/')
+def index():
+    return render_template('admin/index.html', admins=get_all('admin'))
+
+
 @bp.route('/register', methods=('GET', 'POST'))
 @login_required
 def register():
-    form = AdminRegisterForm(request.form)
+    form = AdminForm(request.form)
     username = form.username.data
     password = form.password.data
     if request.method == 'POST' and form.validate():
@@ -58,6 +64,26 @@ def logout():
     return redirect(url_for('index'))
 
 
+@bp.route('/<admin_id>/update', methods=('GET', 'POST'))
+@login_required
+def update(admin_id):
+    admin = get_model_by_id('admin', admin_id)
+    form = AdminForm(request.form, ObjectView(admin))
+    if request.method == 'POST' and form.validate():
+        update_admin(admin_id, form.username.data, form.password.data)
+        return redirect(url_for('admin.index'))
+    return render_template('admin/update.html', form=form)
+
+
+@bp.route('/<admin_id>/delete', methods=('POST',))
+@login_required
+def delete(admin_id):
+    admin = get_model_by_id('admin', admin_id)
+    if admin is not None:
+        delete_model('admin', admin_id)
+    return redirect(url_for('admin.index'))
+
+
 # registers a function that runs before the view function, no matter what URL is requested
 @bp.before_app_request
 def load_logged_in_user():
@@ -67,6 +93,13 @@ def load_logged_in_user():
     else:
         g.admin = get_admin_by('id', admin_id)
 
+def update_admin(admin_id, username, password):
+    cur = get_db().cursor()
+    cur.execute(
+        'UPDATE admin SET username = %s, password=%s WHERE id=%s',
+        (username, generate_password_hash(password), admin_id)
+    )
+    get_db().commit()
 
 def register_new_admin(username, password):
     cur = get_db().cursor()

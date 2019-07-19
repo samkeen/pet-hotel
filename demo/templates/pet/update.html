@@ -1,20 +1,17 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ pet['name'] }}"{% endblock %}</h1>
+<h1>{% block title %}Update Pet{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="name">Name</label>
-    <input name="name" id="name"
-      value="{{ request.form['name'] or pet['name'] }}" required>
-    <label for="date_of_birth">Date of birth</label>
-    <input name="date_of_birth" id="date_of_birth" value="{{ request.form['date_of_birth'] or pet['date_of_birth'] }}" >
-    <input type="submit" value="Save">
-  </form>
-  <hr>
-  <form action="{{ url_for('pet.delete', id=pet['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+<form method="post">
+    <h3>Pet</h3>
+    <dl>
+        {{ render_field(form.name) }}
+        {{ render_field(form.date_of_birth) }}
+    </dl>
+    <p><input type=submit value=Update></p>
+</form>
 {% endblock %}

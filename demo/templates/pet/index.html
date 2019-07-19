@@ -12,10 +12,15 @@
     <article>
       <header>
         <div>
-          <h1>{{ pet['name'] }}</h1>
+          <p>
+            {{ pet['name'] }}
+            <a href="{{ url_for('pet.update', pet_id=pet['id']) }}">Edit</a>
+            <form method="post" action="{{ url_for('pet.delete', pet_id=pet['id']) }}">
+          <input type="submit" onclick="return confirm('Are you sure?')" value="delete">
+        </form>
+          </p>
         </div>
       </header>
-      <p>{{ pet }} <a href="{{ url_for('pet.update', id=pet['id']) }}">Edit</a></p>
 
     </article>
     {% if not loop.last %}

@@ -1,0 +1,16 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Update Admin{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" novalidate>
+    <dl>
+        {{ render_field(form.username) }}
+        {{ render_field(form.password) }}
+    </dl>
+    <p><input type=submit value=Update></p>
+</form>
+{% endblock %}

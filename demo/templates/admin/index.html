@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Admins{% endblock %}</h1>
+  {% if g.user %}
+    <a href="{{ url_for('admin.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for admin in admins %}
+    <article>
+      <header>
+        <div>
+          <p>
+            {{ admin['username'] }}
+            <a href="{{ url_for('admin.update', admin_id=admin['id']) }}">Edit</a>
+            <form method="post" action="{{ url_for('admin.delete', admin_id=admin['id']) }}">
+          <input type="submit" onclick="return confirm('Are you sure?')" value="delete">
+        </form>
+          </p>
+        </div>
+      </header>
+
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

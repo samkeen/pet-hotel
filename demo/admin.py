@@ -19,6 +19,7 @@ def login_required(view):
         if g.admin is None:
             return redirect(url_for('admin.login'))
         return view(**kwargs)
+
     return wrapped_view
 
 
@@ -28,8 +29,10 @@ def index():
 
 
 @bp.route('/register', methods=('GET', 'POST'))
-@login_required
 def register():
+    # allow register to render if there are no existing admins
+    if existing_admins() and g.admin is None:
+        return redirect(url_for('admin.login'))
     form = AdminForm(request.form)
     username = form.username.data
     password = form.password.data
@@ -93,6 +96,7 @@ def load_logged_in_user():
     else:
         g.admin = get_admin_by('id', admin_id)
 
+
 def update_admin(admin_id, username, password):
     cur = get_db().cursor()
     cur.execute(
@@ -100,6 +104,7 @@ def update_admin(admin_id, username, password):
         (username, generate_password_hash(password), admin_id)
     )
     get_db().commit()
+
 
 def register_new_admin(username, password):
     cur = get_db().cursor()
@@ -116,3 +121,13 @@ def get_admin_by(field_name, field_value):
         f'SELECT * FROM admin WHERE {field_name} = %s', (field_value,)
     )
     return cur.fetchone()
+
+
+def existing_admins():
+    return len(get_admins()) > 0
+
+
+def get_admins():
+    cur = get_db().cursor()
+    cur.execute(f'SELECT * FROM admin')
+    return cur.fetchall()

@@ -1,5 +1,5 @@
-create schema demo collate utf8mb4_0900_ai_ci;
-
+create schema if not exists pet_hotel collate utf8mb4_0900_ai_ci;
+use pet_hotel;
 create table admin
 (
 	id varchar(36) not null

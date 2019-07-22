@@ -17,8 +17,8 @@ def get_db():
 
         # MySQL configurations
         app.config['MYSQL_DATABASE_USER'] = 'root'
-        app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
-        app.config['MYSQL_DATABASE_DB'] = 'demo'
+        app.config['MYSQL_DATABASE_PASSWORD'] = ''
+        app.config['MYSQL_DATABASE_DB'] = 'pet_hotel'
         app.config['MYSQL_DATABASE_HOST'] = 'localhost'
         mysql.init_app(app)
         g.db = mysql.connect()

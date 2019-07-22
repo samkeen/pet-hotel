@@ -22,6 +22,7 @@ setuptools.setup(
         "flask",
         "flask-mysql",
         "wtforms",
+        "cryptography",
     ],
 
     python_requires=">=3.6",

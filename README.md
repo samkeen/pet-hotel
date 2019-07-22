@@ -11,8 +11,9 @@ pip install -r requirements.txt
 
 **Create Db**
 ```bash
-
+mysql -u root < init-schema.sql
 ```
+Set your db config in `demo/db.py`
 
 **Run the local server**
 ```bash

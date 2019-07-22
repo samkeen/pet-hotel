@@ -15,8 +15,8 @@ setuptools.setup(
 
     author="Sam Keen",
 
-    package_dir={"": "demo"},
-    packages=setuptools.find_packages(where="demo"),
+    package_dir={"": "pet_hotel"},
+    packages=setuptools.find_packages(where="pet_hotel"),
 
     install_requires=[
         "flask",

@@ -2,9 +2,9 @@ from flask import (
     Blueprint, redirect, render_template, request, url_for
 )
 
-from demo.admin import login_required
-from demo.forms.pet import PetForm
-from demo.models import get_all, insert_model, get_model_by_id, ObjectView, update_model, delete_model
+from pet_hotel.admin import login_required
+from pet_hotel.forms.pet import PetForm
+from pet_hotel.models import get_all, insert_model, get_model_by_id, ObjectView, update_model, delete_model
 
 bp = Blueprint('pet', __name__, url_prefix='/pet')
 

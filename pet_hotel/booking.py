@@ -1,10 +1,10 @@
 from flask import (
     Blueprint, render_template, request, redirect, url_for)
 
-from demo.admin import login_required
-from demo.db import get_db
-from demo.forms.booking import BookingForm
-from demo.models import insert_model, get_all, get_model_by_id, ObjectView, update_model, delete_model
+from pet_hotel.admin import login_required
+from pet_hotel.db import get_db
+from pet_hotel.forms.booking import BookingForm
+from pet_hotel.models import insert_model, get_all, get_model_by_id, ObjectView, update_model, delete_model
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 

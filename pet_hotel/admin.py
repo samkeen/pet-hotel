@@ -5,10 +5,10 @@ from flask import (
     session, g, request)
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from demo.db import get_db, get_uuid
-from demo.forms.admin_register import AdminForm
-from demo.forms.login import LoginForm
-from demo.models import ObjectView, get_model_by_id, update_model, delete_model, get_all
+from pet_hotel.db import get_db, get_uuid
+from pet_hotel.forms.admin_register import AdminForm
+from pet_hotel.forms.login import LoginForm
+from pet_hotel.models import ObjectView, get_model_by_id, update_model, delete_model, get_all
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 

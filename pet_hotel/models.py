@@ -1,6 +1,6 @@
 from werkzeug.exceptions import abort
 
-from demo.db import get_db, build_insert, get_uuid, build_update, build_delete
+from pet_hotel.db import get_db, build_insert, get_uuid, build_update, build_delete
 
 
 def get_all(model_name):

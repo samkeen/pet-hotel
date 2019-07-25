@@ -10,7 +10,7 @@
     <h3>Pet</h3>
     <dl>
         {{ render_field(form.name) }}
-        {{ render_field(form.date_of_birth) }}
+        {{ render_field(form.date_of_birth, class_="datepicker") }}
     </dl>
     <p><input type=submit value=Update></p>
 </form>

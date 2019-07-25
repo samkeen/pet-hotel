@@ -10,8 +10,8 @@
     <dl>
         {{ render_field(form.owner_id) }}
         {{ render_field(form.pet_id) }}
-        {{ render_field(form.check_in_date) }}
-        {{ render_field(form.check_out_date) }}
+        {{ render_field(form.check_in_date, class_="datepicker") }}
+        {{ render_field(form.check_out_date, class_="datepicker") }}
     </dl>
     <p><input type=submit value=Create></p>
 </form>

@@ -3,8 +3,6 @@ venv/
 *.pyc
 __pycache__/
 
-instance/
-
 .pytest_cache/
 .coverage
 htmlcov/
@@ -14,3 +12,5 @@ build/
 *.egg-info/
 
 /.idea/
+
+/instance/config.py

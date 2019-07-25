@@ -1,33 +1,13 @@
 import uuid
 
-from flask import current_app, g, Flask
-from flaskext.mysql import MySQL
-from pymysql.cursors import DictCursor
+from flask import current_app, g
 
-
-def init_app(app):
-    # tells Flask to call that function when cleaning up after returning the response.
-    app.teardown_appcontext(close_db)
+from pet_hotel.extentions import app_mysql
 
 
 def get_db():
     if 'db' not in g:
-        app = Flask(__name__)
-        mysql = MySQL(cursorclass=DictCursor)
-
-        # MySQL configurations
-        app.config['MYSQL_DATABASE_USER'] = 'root'
-        app.config['MYSQL_DATABASE_PASSWORD'] = ''
-        app.config['MYSQL_DATABASE_DB'] = 'pet_hotel'
-        app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-        mysql.init_app(app)
-        g.db = mysql.connect()
-        # g.db = sqlite3.connect(
-        #     current_app.config['DATABASE'],
-        #     detect_types=sqlite3.PARSE_DECLTYPES
-        # )
-        # g.db.row_factory = sqlite3.Row
-
+        g.db = app_mysql.connect()
     return g.db
 
 
@@ -59,9 +39,3 @@ def build_update(table_name, attributes):
 
 def build_delete(table_name):
     return f'DELETE FROM `{table_name}` WHERE id = %s'
-
-
-def init_db():
-    db = get_db()
-    with current_app.open_resource('schema.sql') as f:
-        db.cursor().execute(f.read().decode('utf8'))

@@ -1,0 +1,5 @@
+MYSQL_DATABASE_USER = 'root'
+MYSQL_DATABASE_PASSWORD = ''
+MYSQL_DATABASE_DB = 'pet_hotel'
+MYSQL_DATABASE_HOST = 'localhost'
+SECRET_KEY='<secret here>'
